@@ -53,7 +53,7 @@ app.listen(port, async (req, res) => {
             // console.log(json);
             
             const cnpjDb = record.CNPJ.replace(/[^\d]+/g, '');
-            if(clientesDb.findIndex(arr=>arr.CNPJ === cnpjDb) === -1){
+            if(clientesDb.findIndex(arr=>arr.CNPJ === cnpjDb) === -1 || record['NOME ABREVIADO']===null){
             const foneDb = record.FONE === null ? '9999999999' : record.FONE.replace(/[^\d]+/g, '');
             const contCelDb = record.CELULAR === null ? '99999999999' : record.CELULAR.replace(/[^\d]+/g, '');
             const contFoneDb = record['FONE CONTATO'] === null ? '9999999999' : record['FONE CONTATO'].replace(/[^\d]+/g, '');
