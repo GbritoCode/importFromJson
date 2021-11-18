@@ -23,8 +23,8 @@ class Database {
     init() {
         this.connection = new Sequelize({
             username: "postgres",
-            password: "postgres",
-            database: "tovo",
+            password: "e98fee051278550ad4ba03ba3c9b86a228429c6c",
+            database: "prospectar",
             host: "127.0.0.1",
             dialect: "postgres"
           });

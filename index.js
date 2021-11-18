@@ -46,11 +46,14 @@ app.get('/', async(req, res) => {
 
 app.listen(port, async (req, res) => {
     let count = 0
+
+    const clientesDb = await Cli.findAll({attributes:['CNPJ']})
     async function up(record) {
         try {
-          // console.log(json);
-  
+            // console.log(json);
+            
             const cnpjDb = record.CNPJ.replace(/[^\d]+/g, '');
+            if(clientesDb.findIndex(arr=>arr.CNPJ === cnpjDb) === -1){
             const foneDb = record.FONE === null ? '9999999999' : record.FONE.replace(/[^\d]+/g, '');
             const contCelDb = record.CELULAR === null ? '99999999999' : record.CELULAR.replace(/[^\d]+/g, '');
             const contFoneDb = record['FONE CONTATO'] === null ? '9999999999' : record['FONE CONTATO'].replace(/[^\d]+/g, '');
@@ -85,17 +88,17 @@ app.listen(port, async (req, res) => {
             });
             count+=1
             console.log('contador: ',count)
-            await new Promise((res) => setTimeout(res, 60000));
-        
+            await new Promise((res) => setTimeout(res, 20500));
+            }
         } catch (err) {
-          console.log(err);
+        //   console.log(err);
           return res.json({ error: 'Erro Interno Do Servidor' });
         }
       }
       const q = new Queue(3);
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < json.length; i++) {
         console.log(json[i]);
-        q.enqueue(() => up(json[i]));
+        await q.enqueue(() => up(json[i]));
         
     }
 
